@@ -1,0 +1,1140 @@
+/* RESET Y ESTILOS GLOBALES */
+* {
+  box-sizing: border-box;
+  font-family: 'Exo 2', sans-serif;
+  font-weight: 300;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  background-color: #4f1f1f;
+  color: #fff;
+  height: 100%;
+}
+
+/*------------------------------------------------------------------------------------------------------------------------ CLASES GENERALES------------------------------ */
+.view {
+  display: none;
+}
+.view:not(.hidden) {
+  display: block;
+}
+.view.hidden {
+  display: none !important;
+}
+.error {
+  color: #ffdddd;
+  margin-top: 0.5rem;
+}
+.success {
+  color: #ddffdd;
+  margin-top: 0.5rem;
+}
+
+/* ------------------------------------------------------------CABECERA PARA LOGIN/REGISTER------------------------------------------------------------------------------------------ */
+.auth-header {
+  background-color: #3e1717;
+  padding: 2rem;
+  text-align: center;
+}
+.auth-header-logo-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.auth-header-logo {
+  width: 100px;
+  height: auto;
+  margin-top: 10px;
+}
+.auth-header-title {
+  font-size: 4rem;
+  color: #fff;
+  margin: 0;
+}
+
+/* ------------------------------CABECERA PRINCIPAL una vez logued ------------------------------*/
+.main-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+.main-header-sticky {
+  background-color: #3e1717;
+  padding: 1rem 2rem;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+.menu-toggle {
+  font-size: 2rem;
+  cursor: pointer;
+  color: #fff;
+}
+.main-header-center {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.main-header-logo {
+  width: 50px;
+  height: auto;
+}
+.main-header-title {
+  font-size: 3rem;
+
+  font-weight: 400;
+  color: #fff;
+  margin: 0;
+}
+.logout-btn {
+  background-color: #7f4f4f;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.logout-btn:hover {
+  background-color: #9f6f6f;
+}
+
+/* ------------------------------CABECERA PARA Subvistas ------------------------------*/
+.view-header {
+  background-color: #3e1717;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+.view-header-top {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+}
+.view-header-title {
+  flex: 1;
+  font-size: 2.2rem;
+  color: #fff;
+  margin: 0;
+  padding-left: 1rem;
+}
+.back-btn {
+  background-color: #7f4f4f;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.back-btn:hover {
+  background-color: #9f6f6f;
+}
+
+/* ------------------------------barra lateral ------------------------------------------------------------*/
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background-color: #3e1717;
+  overflow: auto;
+  transition: left 0.3s ease;
+  padding-top: 4rem;
+  z-index: 9999;
+}
+.sidebar.open {
+  left: 0;
+}
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+.sidebar li {
+  margin: 1rem 0;
+}
+.sidebar a {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+}
+.sidebar a:hover {
+  background-color: #5f2f2f;
+}
+
+/* ------------------------------------------------------------ pagina principal ------------------------------ */
+.content {
+  padding: 2rem;
+  transition: margin-left 0.3s ease;
+  margin-top: 120px;
+}
+.sidebar.open ~ .content {
+  margin-left: 250px;
+}
+.events-section {
+  margin-bottom: 5rem;
+  padding: 1rem 1rem;
+  margin-top: 2rem;
+}
+.events-section h2 a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 5rem;
+  font-weight: 200;
+}
+.events-section h2 {
+  position: relative;
+  padding-bottom: 0.5rem;
+  margin: 2rem 0;
+  border-bottom: 2px solid #fff;
+  font-size: 2rem;
+  color: #fff;
+}
+
+/* ------------------------------------------------------------ Swipper estilos ------------------------------------------------------------*/
+.swiper {
+  margin-bottom: 2rem;
+  /* Se añade margen inferior para separar los sliders */
+}
+.swiper-slide {
+  width: 33.333% !important;
+  height: 600px !important;
+  position: relative;
+  overflow: hidden;
+}
+.swiper-slide img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+.overimg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease;
+}
+.swiper-slide:hover .overimg {
+  opacity: 1;
+}
+.overimg p,
+.overimg h3 {
+  color: #fff;
+  font-size: 2rem;
+  text-align: center;
+  margin: 0;
+}
+
+/* ------------------------------------------------------------ Login y registro -------------------------------------*/
+
+#login-view.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* O lo que desees */
+  background-color: #3e1717; /* O tu color #4f1f1f */
+  margin-top: -100px;
+}
+
+.login-container-mix {
+  width: 80%;
+  max-width: 900px;
+  display: flex;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* 
+ en la izq pongo el formulario para logear perfil
+*/
+.login-left {
+  flex: 1;
+  background-color: #5f2f2f;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-left h2 {
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  color: #fff;
+  text-align: center;
+}
+
+/* Formu de logeo */
+.login-left form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.login-left form label {
+  color: #fff;
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+}
+
+.login-left form input {
+  padding: 0.8rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #333;
+  color: #fff;
+}
+
+/*  password */
+.password-field {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.password-field input {
+  flex: 1;
+}
+/*  el show del password */
+.toggle-pwd-btn {
+  background: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+/* ok iniciar session */
+.login-submit-btn {
+  background-color: #3e1717;
+  color: #fff;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.login-submit-btn:hover {
+  background-color: #9f6f6f;
+}
+
+.forgot-link {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  text-align: right;
+}
+
+/* en la derecha dejo el registro */
+.login-right {
+  flex: 1;
+  background-color: #222;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-right h2 {
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  color: #fff;
+}
+
+.register-btn {
+  background-color: #652a2a;
+  color: #fff;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.register-btn:hover {
+  background-color: #9f6f6f;
+}
+
+/* ==========================================REGISTER========================================== */
+
+#register-view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #3e1717;
+  padding: 0;
+  margin-top: -100px;
+}
+
+.register-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #3e1717;
+}
+
+/* 2 columnas*/
+.register-container-mix {
+  width: 80%;
+  max-width: 900px;
+  display: flex;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* columna izq - boton y message login */
+.register-left {
+  flex: 1;
+  background-color: #222;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-left h2 {
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  color: #fff;
+  text-align: center;
+}
+
+.login-btn {
+  background-color: #652a2a;
+  color: #fff;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.login-btn:hover {
+  background-color: #9f6f6f;
+}
+
+/* Columna rightv---- Formulario para registrarse */
+.register-right {
+  flex: 1;
+  background-color: #5f2f2f;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.register-right h2 {
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  color: #fff;
+  text-align: center;
+}
+
+/* Formulario para registrar usuario */
+.register-right form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.register-right form label {
+  color: #fff;
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+}
+
+.register-right form input {
+  padding: 0.8rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #333;
+  color: #fff;
+}
+
+/* uso el mismo para show y pwrd */
+.password-field {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.password-field input {
+  flex: 1;
+}
+
+/* igual q login oculto o muestro password*/
+.toggle-pwd-btn {
+  background: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+/* enviar registro */
+.register-submit-btn {
+  background-color: #652a2a;
+  color: #fff;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.register-submit-btn:hover {
+  background-color: #3e1717;
+}
+
+/* ==========================================UPLOAD MEDIA VIEW========================================== */
+#upload-media-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+#upload-media-view h2 {
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  text-transform: uppercase;
+}
+#upload-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 800px;
+  height: 400px;
+  background-color: #5f2f2f;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+#upload-form select,
+#upload-form input[type='file'],
+#upload-form input[type='text'] {
+  border: none;
+  border-radius: 4px;
+  padding: 1rem;
+  background-color: #3e1717;
+  color: #fff;
+}
+#upload-form button {
+  background-color: #7f4f4f;
+  color: #fff;
+  border: none;
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+#upload-form button:hover {
+  background-color: #9f6f6f;
+}
+
+/* ===============================================================PROFILE VIEW=============================================================== */
+#profile-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  background-color: #4f1f1f;
+}
+#profile-view .section-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+}
+#profile-view .section-header h2 {
+  font-size: 2rem;
+  margin: 0;
+  color: #fff;
+}
+#profile-view .section-header .back-btn {
+  background-color: #7f4f4f;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+#profile-view .section-header .back-btn:hover {
+  background-color: #9f6f6f;
+}
+.profile-container {
+  display: flex;
+  gap: 2rem;
+  width: 800px;
+  margin: 2rem auto;
+  background-color: #5f2f2f;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+.profile-details {
+  flex: 1;
+  text-align: center;
+  border-right: 2px solid #fff;
+  padding-right: 1rem;
+}
+.profile-details img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  border: 2px solid #fff;
+}
+.profile-details h3 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+.profile-details p {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+.profile-forms {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.profile-form label {
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+  color: #fff;
+}
+.profile-form input[type='text'],
+.profile-form input[type='email'],
+.profile-form input[type='password'],
+.profile-form input[type='file'] {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #3e1717;
+  color: #fff;
+}
+.profile-form button {
+  background-color: #7f4f4f;
+  color: #fff;
+  border: none;
+  padding: 0.7rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+.profile-form button:hover {
+  background-color: #9f6f6f;
+}
+
+/* =============================================================== no funcional TICKETS VIEW  no funcional ==========================================*/
+#tickets-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  background-color: #4f1f1f;
+}
+/* ==========================================UPCOMING========================================== */
+/* ========================================== UPCOMING EVENTS LIST VIEW========================================== */
+#upcoming-events-view {
+  padding: 1rem;
+}
+.search-container {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.search-container input {
+  width: 80%;
+  max-width: 400px;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+.events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.event-item {
+  display: flex;
+  background-color: #5f2f2f;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.event-item img {
+  width: 40%;
+  object-fit: cover;
+}
+.event-info {
+  padding: 2rem;
+  flex: 1;
+}
+.event-title-card {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.event-date .label,
+.event-location .label {
+  color: rgba(210, 105, 30, 0.7);
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-right: 0.5rem;
+}
+.event-date .value,
+.event-location .value {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+}
+.event-info h3 {
+  margin-bottom: 0.5rem;
+}
+.event-description-card {
+  margin: 1rem 0;
+}
+.event-info button {
+  background-color: #7f4f4f;
+  border: none;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 1rem;
+}
+
+/*========================================== UPCOMING EVENT SINGULAR VIEW==========================================*/
+#upcoming-event-singular-view {
+  padding: 2rem;
+}
+.upcoming-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.event-images {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1rem;
+  justify-content: center;
+}
+.event-images img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 4px;
+}
+.event-description p {
+  max-width: 800px;
+  text-align: center;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin: 0 auto;
+}
+/* ============================================================================ ATTENDED ==================================================================================== */
+/* ====================================== ATTENDED EVENTS LIST VIEW ====================================== */
+#attended-events-view {
+  padding: 1rem;
+}
+.attended-item {
+  display: flex;
+  flex-direction: row-reverse;
+  background-color: #5f2f2f;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.attended-item img {
+  width: 40%;
+  object-fit: cover;
+}
+.attended-info {
+  padding: 1rem;
+  flex: 1;
+}
+.attended-info h3 {
+  margin-bottom: 0.5rem;
+}
+.attended-info p {
+  margin: 0.2rem 0;
+}
+.attended-info button {
+  background-color: #7f4f4f;
+  border: none;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 1rem;
+}
+
+/* ======================================ATTENDED EVENT SINGULAR VIEW====================================== */
+#attended-event-singular-view {
+  padding: 1rem;
+}
+.event-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.event-main-img {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+#attended-event-description {
+  font-size: 1.1rem;
+  margin: 2rem;
+  padding: 1rem;
+  text-align: center;
+}
+/* ======================================  GALLERY ====================================== */
+/* ====================================== GALLERY VIEW============================================================================ */
+#gallery-view {
+  padding: 1rem;
+  background-color: #3e1717;
+  min-height: 100vh;
+}
+.gallery-selector {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.gallery-selector button {
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #7f4f4f;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.gallery-selector button:hover {
+  background-color: #9f6f6f;
+}
+#gallery-mosaic-view {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+.gallery-item {
+  background-color: #5f2f2f;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.gallery-item:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+.gallery-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+.gallery-item p {
+  padding: 0.5rem;
+  font-size: 1rem;
+  text-align: center;
+  background-color: #4f1f1f;
+}
+#gallery-view .search-container {
+  display: none;
+}
+
+/* ======================================GALLERY LIST VIEW ======================================*/
+#gallery-list-view {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem;
+}
+.gallery-event-section {
+  background-color: #5f2f2f;
+  padding: 1rem;
+  border-radius: 8px;
+}
+.gallery-event-section h3 {
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #fff;
+  font-size: 1.5rem;
+  text-align: center;
+}
+.gallery-event-items {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.gallery-event-items img {
+  width: calc(25% - 0.75rem);
+  max-width: 150px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.gallery-event-items img:hover {
+  transform: scale(1.05);
+}
+#gallery-list-container img {
+  width: 400px;
+  height: 400px;
+  max-width: 100%;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+#gallery-list-container img:hover {
+  transform: scale(1.05);
+}
+
+/* ======================================GALLERY SINGULAR VIEW====================================== */
+#event-gallery-view {
+  padding: 1rem;
+}
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+  gap: 1rem;
+}
+.gallery-grid img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/*============================================================================ OTRAS COSAS ============================================================================*/
+.home-button {
+  display: inline-block;
+  margin: 1rem;
+  cursor: pointer;
+}
+
+/* MODAL FLYER */
+.modalFlyer.hidden {
+  display: none;
+}
+.modalFlyer.open {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.modalFlyer-content {
+  max-width: 90%;
+  max-height: 90%;
+  background: #fff;
+  color: #000;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.modalFlyer-content img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.close-btn {
+  position: absolute;
+  top: 0;
+  right: 1rem;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #ba1919;
+}
+
+/*============================================================================ MODAL GALLERY====================================== */
+.modalGallery {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modalGallery-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+}
+.modalGallery-content img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.modalGallery .close-btn {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  background: #fff;
+  color: #000;
+  padding: 5px 10px;
+  font-size: 2rem;
+  cursor: pointer;
+  border-radius: 50%;
+}
+.hidden {
+  display: none !important;
+}
+
+/* ====================================== MENSAJES de interf<z con usuario ======================================*/
+#toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10000;
+}
+.toast {
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  min-width: 200px;
+  text-align: center;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+.toast.fade-out {
+  opacity: 0;
+}
+
+/* ====================================== botones nuevos para navegacion ====================================== */
+
+#attended-home-btn,
+#upcoming-home-btn,
+#attended-back-to-list-btn,
+#gallery-back-btn {
+  background-color: #7f4f4f;
+  color: #fff;
+  border: none;
+  padding: 0.7rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+#attended-home-btn:hover,
+#upcoming-home-btn:hover,
+#attended-back-to-list-btn:hover,
+#gallery-back-btn:hover {
+  background-color: #9f6f6f;
+}
+
+.home-btn {
+  background-color: #7f4f4f;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-right: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.home-btn:hover {
+  background-color: #9f6f6f;
+}
+
+.show-attended-btn {
+  background-color: #7f4f4f;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+#gallery-back-btn {
+  margin-left: 85%;
+  padding: 0.5rem;
+}
+#attended-event-title {
+  letter-spacing: 5px;
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+/* ====================================== rebotoneado del gallery====================================== */
+#back-to-gallery-general-btn,
+#back-to-attended-event-btn {
+  background-color: #7f4f4f;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  margin-right: 1rem; /* Espacio entre botones */
+}
+
+#back-to-gallery-general-btn:hover,
+#back-to-attended-event-btn:hover {
+  background-color: #9f6f6f;
+}

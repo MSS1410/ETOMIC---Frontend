@@ -27,7 +27,7 @@ export async function apiFetch(url, options = {}) {
     })
     const data = await response.json()
 
-    if (response.ok) {
+    if (!response.ok) {
       throw new Error(data.message || `Error ${response.status}`)
     }
     return data

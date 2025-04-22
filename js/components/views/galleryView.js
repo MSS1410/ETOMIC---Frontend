@@ -21,18 +21,19 @@ export function renderGalleryView() {
  * Inicializa los listeners y la carga de datos para galleryView.
  */
 export function initGalleryView() {
-  let galleryData = [](
-    // 1) Carga inicial
-    async function loadAll() {
-      try {
-        const items = await apiFetch(`${API_URL}/event-media`)
-        galleryData = items
-        renderMosaic(items)
-      } catch (err) {
-        console.error('Error loading gallery:', err)
-      }
+  let galleryData = []
+
+  // 1) Carga inicial
+  async function loadAll() {
+    try {
+      const items = await apiFetch(`${API_URL}/event-media`)
+      galleryData = items
+      renderMosaic(items)
+    } catch (err) {
+      console.error('Error loading gallery:', err)
     }
-  )()
+  }
+  loadAll()
 
   // 2) Filtrado
   document.getElementById('gallery-search')?.addEventListener('input', (e) => {

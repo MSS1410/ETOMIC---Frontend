@@ -28,8 +28,8 @@ export function initUpcomingEventsView() {
       const events = await apiFetch(`${API_URL}/events/upcoming`)
       upcomingEventsData = events
       renderList(events)
-    } catch (error) {
-      console.error('Error loading upcoming events:', error)
+    } catch (err) {
+      console.error('Error loading upcoming events:', err)
     }
   }
   loadList()

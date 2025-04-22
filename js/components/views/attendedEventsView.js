@@ -20,18 +20,17 @@ export function renderAttendedEventsView() {
  * Inicializa los listeners y la carga de datos para attendedEventsView.
  */
 export function initAttendedEventsView() {
-  let attendedEventsData = [](
-    // 1) Carga inicial
-    async function loadList() {
-      try {
-        const events = await apiFetch(`${API_URL}/events/attended`)
-        attendedEventsData = events
-        renderList(events)
-      } catch (err) {
-        console.error('Error loading attended events:', err)
-      }
+  let attendedEventsData = []
+
+  async function loadList() {
+    try {
+      const events = await apiFetch(`${API_URL}/events/attended`)
+      attendedEventsData = events
+      renderList(events)
+    } catch (err) {
+      console.error('Error loading attended events:', err)
     }
-  )()
+  }
 
   // 2) Filtrado
   document.getElementById('attended-search')?.addEventListener('input', (e) => {
@@ -40,7 +39,7 @@ export function initAttendedEventsView() {
       attendedEventsData.filter((ev) => ev.title.toLowerCase().includes(term))
     )
   })
-
+  loadList()
   // 3) Click en “View Event” o “View Media”
   document
     .getElementById('attended-full-list')

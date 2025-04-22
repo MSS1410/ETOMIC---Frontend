@@ -1,0 +1,61 @@
+/* Styles for the Home (Main Menu) view */
+.content {
+  padding: 2rem;
+  margin-top: 120px;
+}
+.events-section {
+  margin-bottom: 5rem;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+.events-section h2 a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 5rem;
+  font-weight: 200;
+}
+.events-section h2 {
+  position: relative;
+  padding-bottom: 0.5rem;
+  margin: 2rem 0;
+  border-bottom: 2px solid #fff;
+  font-size: 2rem;
+  color: #fff;
+}
+.swiper {
+  margin-bottom: 2rem;
+}
+.swiper-slide {
+  width: 33.333% !important;
+  height: 600px !important;
+  position: relative;
+  overflow: hidden;
+}
+.swiper-slide img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+.overimg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease;
+}
+.swiper-slide:hover .overimg {
+  opacity: 1;
+}
+.overimg p {
+  color: #fff;
+  font-size: 2rem;
+  text-align: center;
+  margin: 0;
+}

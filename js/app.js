@@ -11,7 +11,7 @@ import {
   renderUpcomingEventsView
 } from './components/views/upcomingEventsView.js'
 import {
-  initAttendedEventsView,
+  initAttendedEvents,
   renderAttendedEventsView
 } from './components/views/attendedEventsView.js'
 import {
@@ -26,8 +26,9 @@ import {
   initProfileView,
   renderProfileView
 } from './components/views/profileView.js'
-import { renderHeader } from './components/layout/header.js'
-import { renderFooter } from './components/layout/footer.js'
+import { renderHeader } from './components/header.js'
+import { renderFooter } from './components/footer.js'
+import { showToast } from './toast.js'
 
 // 1) Montamos el HTML base: header + todas las vistas ocultas + footer
 const app = document.getElementById('app')

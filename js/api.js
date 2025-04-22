@@ -1,33 +1,46 @@
 // js/api.js
 
 export const API_URL = 'http://localhost:3051/api/v1'
+
 let authToken = localStorage.getItem('authToken')
 
 /**
- * Fetch wrapper que añade headers y parsea JSON.
+ * apiFetch: Envolver fetch para llamar a la API con JSON y Bearer token
+ @param {string} url      URL completa (API_URL + endpoint)
+@param {object} options  { method, body, headers, ... }
  */
-export async function apiFetch(pathOrUrl, options = {}) {
-  const url = pathOrUrl.startsWith('http')
-    ? pathOrUrl
-    : `${API_URL}${pathOrUrl}`
+
+export async function apiFetch(url, options = {}) {
   const headers = {
     'Content-Type': 'application/json',
-    ...(options.headers || {})
+    ...options.headers
   }
-  if (authToken) headers['Authorization'] = `Bearer ${authToken}`
 
-  const opts = { ...options, headers }
-  const response = await fetch(url, opts)
-  const data =
-    opts.body instanceof FormData
-      ? await response.json()
-      : await response.json()
-  if (!response.ok) throw new Error(data.message || 'Error en petición')
-  return data
+  if (authToken) {
+    headers['Authorization'] = ` Bearer ${authToken}`
+  }
+
+  try {
+    const response = await fetch(url, {
+      ...options,
+      headers
+    })
+    const data = await response.json()
+
+    if (response.ok) {
+      throw new Error(data.message || `Error ${response.status}`)
+    }
+    return data
+  } catch (error) {
+    console.error('Error while apiFetch:', error)
+    throw error
+  }
 }
 
+// para actualizar el token despues del login
 /**
- * Actualiza token tras login.
+ * Función auxiliar para actualizar el token después del login
+ * @param {string} token
  */
 export function setAuthToken(token) {
   authToken = token

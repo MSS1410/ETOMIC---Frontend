@@ -1,7 +1,7 @@
 // components/views/uploadMediaView.js
-import { apiFetch, API_URL } from '../../api/api.js'
-import { showToast } from '../utils/toast.js'
-import { showView } from '../navigation.js'
+import { apiFetch, API_URL } from '../../api.js'
+import { showToast } from '../../toast.js'
+import { showView } from '../../navigation.js'
 
 // Render function for Upload Media View
 

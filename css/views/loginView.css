@@ -1,0 +1,120 @@
+/* css/views/loginView.css */
+
+#login-view.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #3e1717;
+  margin-top: -100px;
+}
+
+.login-container-mix {
+  width: 80%;
+  max-width: 900px;
+  display: flex;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.login-left {
+  flex: 1;
+  background-color: #5f2f2f;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-left h2 {
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  color: #fff;
+  text-align: center;
+}
+
+.login-left form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.login-left form label {
+  color: #fff;
+  font-weight: bold;
+}
+
+.login-left form input {
+  padding: 0.8rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #333;
+  color: #fff;
+}
+
+.password-field {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.password-field input {
+  flex: 1;
+}
+
+.toggle-pwd-btn {
+  background: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.login-submit-btn {
+  background-color: #3e1717;
+  color: #fff;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.login-submit-btn:hover {
+  background-color: #9f6f6f;
+}
+
+.forgot-link {
+  color: #ccc;
+  font-size: 0.9rem;
+  text-align: right;
+}
+
+.login-right {
+  flex: 1;
+  background-color: #222;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-right h2 {
+  margin-bottom: 2rem;
+  color: #fff;
+}
+
+.register-btn {
+  background-color: #652a2a;
+  color: #fff;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.register-btn:hover {
+  background-color: #9f6f6f;
+}

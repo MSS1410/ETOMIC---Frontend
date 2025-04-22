@@ -1,59 +1,88 @@
-//importar y montar componentes
-
-import { renderHeader, renderFooter } from './components/layout/headerFooter.js'
-import { renderLoginView, initLoginView } from './components/views/loginView.js'
+// js/app.js
+import { showView } from './navigation.js'
+import { initLoginView, renderLoginView } from './components/views/loginView.js'
 import {
-  renderRegisterView,
-  initRegisterView
+  initRegisterView,
+  renderRegisterView
 } from './components/views/registerView.js'
-import { renderHomeView, initHomeView } from './components/views/homeView.js'
+import { initHomeView, renderHomeView } from './components/views/homeView.js'
 import {
-  renderUpcomingView,
-  initUpcomingView
+  initUpcomingEventsView,
+  renderUpcomingEventsView
 } from './components/views/upcomingEventsView.js'
 import {
-  renderAttendedView,
-  initAttendedView
+  initAttendedEventsView,
+  renderAttendedEventsView
 } from './components/views/attendedEventsView.js'
 import {
-  renderGalleryView,
-  initGalleryView
+  initGalleryView,
+  renderGalleryView
 } from './components/views/galleryView.js'
 import {
-  renderUploadMediaView,
-  initUploadMediaView
+  initUploadMediaView,
+  renderUploadMediaView
 } from './components/views/uploadMediaView.js'
 import {
-  renderProfileView,
-  initProfileView
+  initProfileView,
+  renderProfileView
 } from './components/views/profileView.js'
+import { renderHeader } from './components/layout/header.js'
+import { renderFooter } from './components/layout/footer.js'
 
-//renderizar
-
+// 1) Montamos el HTML base: header + todas las vistas ocultas + footer
 const app = document.getElementById('app')
 app.innerHTML = `
   ${renderHeader()}
+
   <main>
-    ${renderLoginView()}
-    ${renderRegisterView()}
-    ${renderHomeView()}
-    ${renderUpcomingView()}
-    ${renderAttendedView()}
-    ${renderGalleryView()}
-    ${renderUploadMediaView()}
-    ${renderProfileView()}
-    <!-- opcional: ${renderTicketsView()} -->
+    <section id="login-view" class="view hidden">
+      ${renderLoginView()}
+    </section>
+
+    <section id="register-view" class="view hidden">
+      ${renderRegisterView()}
+    </section>
+
+    <section id="main-menu-view" class="view hidden">
+      ${renderHomeView()}
+    </section>
+
+    <section id="upcoming-events-view" class="view hidden">
+      ${renderUpcomingEventsView()}
+    </section>
+
+    <section id="attended-events-view" class="view hidden">
+      ${renderAttendedEventsView()}
+    </section>
+
+    <section id="gallery-view" class="view hidden">
+      ${renderGalleryView()}
+    </section>
+
+    <section id="upload-media-view" class="view hidden">
+      ${renderUploadMediaView()}
+    </section>
+
+    <section id="profile-view" class="view hidden">
+      ${renderProfileView()}
+    </section>
   </main>
+
   ${renderFooter()}
 `
 
-// incicializar componentes
+// 2) Al DOMContentLoaded inicializamos cada módulo y forzamos login
+document.addEventListener('DOMContentLoaded', () => {
+  // Inicializaciones (añaden event‑listeners, fetch iniciales, etc)
+  initLoginView()
+  initRegisterView()
+  initHomeView()
+  initUpcomingEventsView()
+  initAttendedEventsView()
+  initGalleryView()
+  initUploadMediaView()
+  initProfileView()
 
-initLoginView()
-initRegisterView()
-initHomeView()
-initUpcomingView()
-initAttendedView()
-initGalleryView()
-initUploadMediaView()
-initProfileView()
+  // Forzamos que la primera vista al cargar sea la de Login
+  showView('login-view', true)
+})

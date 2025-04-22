@@ -1,5 +1,7 @@
-// js/components/views/homeView.js
-
+import { showView } from '../../navigation.js'
+import { initUpcomingEventsView } from './upcomingEventsView.js'
+import { initAttendedEventsView } from './attendedEventsView.js'
+import { initGalleryView } from './galleryView.js'
 /**
  * Render the Home (Main Menu) view, showing Upcoming, Attended, and Gallery sliders.
  */
@@ -38,23 +40,24 @@ export function renderHomeView() {
 /**
  * Initialize Home view: attach listeners and load initial slider data.
  */
+
 export function initHomeView() {
-  // Navigation links
-  document.getElementById('link-upcoming')?.addEventListener('click', (ev) => {
-    ev.preventDefault()
+  // Al clicar en los enlaces del título:
+  document.getElementById('link-upcoming')?.addEventListener('click', (e) => {
+    e.preventDefault()
     showView('upcoming-events-view')
   })
-  document.getElementById('link-attended')?.addEventListener('click', (ev) => {
-    ev.preventDefault()
+  document.getElementById('link-attended')?.addEventListener('click', (e) => {
+    e.preventDefault()
     showView('attended-events-view')
   })
-  document.getElementById('link-gallery')?.addEventListener('click', (ev) => {
-    ev.preventDefault()
+  document.getElementById('link-gallery')?.addEventListener('click', (e) => {
+    e.preventDefault()
     showView('gallery-view')
   })
 
-  // On entering home, load all three sliders
-  loadUpcomingEvents()
-  loadAttendedEvents()
-  loadGallery()
+  // Inicializar sub-vistas de home para que el slider cargue
+  initUpcomingEventsView()
+  initAttendedEventsView()
+  initGalleryView()
 }

@@ -36,23 +36,47 @@ export function renderProfileView() {
   `
 }
 // profileView.js
-
 export function initProfileView() {
-  // Submit de imagen de perfil
+  // 1) Subida de imagen de perfil
   document
     .getElementById('profile-image-form')
     ?.addEventListener('submit', async (e) => {
       e.preventDefault()
-      // aquí tu lógica para subir imagen…
-      showToast('Imagen actualizada', 2000)
+      const file = document.getElementById('profile-image-input').files[0]
+      if (!file) return showToast('Selecciona una imagen')
+      const form = new FormData()
+      form.append('image', file)
+      try {
+        await apiFetch(`${API_URL}/users/profile/image`, {
+          method: 'POST',
+          body: form,
+          headers: {}
+        })
+        showToast('Imagen de perfil actualizada')
+      } catch (err) {
+        showToast(err.message)
+      }
     })
 
-  // Submit de datos de perfil
+  // 2) Actualización de datos y contraseña
   document
     .getElementById('profile-data-form')
     ?.addEventListener('submit', async (e) => {
       e.preventDefault()
-      // lógica para actualizar nombre/email/password…
-      showToast('Perfil guardado', 2000)
+      const name = document.getElementById('profile-name').value
+      const email = document.getElementById('profile-email').value
+      const password = document.getElementById('profile-password').value
+      const confirm = document.getElementById('profile-confirm-password').value
+      if (password && password !== confirm)
+        return showToast('Las contraseñas no coinciden')
+      try {
+        await apiFetch(`${API_URL}/users/profile`, {
+          method: 'PUT',
+          body: JSON.stringify({ name, email, password })
+        })
+        showToast('Perfil guardado')
+      } catch (err) {
+        showToast(err.message)
+      }
     })
 }

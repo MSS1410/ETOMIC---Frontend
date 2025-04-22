@@ -12,5 +12,3 @@ export function showToast(message, duration = 3000) {
     }, 500)
   }, duration)
 }
-
-showToast()

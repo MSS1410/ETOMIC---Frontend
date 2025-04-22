@@ -1,75 +1,57 @@
 // js/app.js
-import { showView } from './navigation.js'
-import { initLoginView, renderLoginView } from './components/views/loginView.js'
+import { renderHeader } from './components//header.js'
+import { renderFooter } from './components//footer.js'
+import { showView, goBack } from './navigation.js'
+
+import { renderLoginView, initLoginView } from './components/views/loginView.js'
+
 import {
   initRegisterView,
   renderRegisterView
 } from './components/views/registerView.js'
-import { initHomeView, renderHomeView } from './components/views/homeView.js'
+
+import { renderHomeView, initHomeView } from './components/views/homeView.js'
+
 import {
-  initUpcomingEventsView,
-  renderUpcomingEventsView
+  renderUpcomingEventsView,
+  initUpcomingEventsView
 } from './components/views/upcomingEventsView.js'
+
 import {
-  initAttendedEvents,
-  renderAttendedEventsView
+  renderAttendedEventsView,
+  initAttendedEventsView
 } from './components/views/attendedEventsView.js'
+
 import {
-  initGalleryView,
-  renderGalleryView
+  renderGalleryView,
+  initGalleryView
 } from './components/views/galleryView.js'
+
 import {
-  initUploadMediaView,
-  renderUploadMediaView
+  renderUploadMediaView,
+  initUploadMediaView
 } from './components/views/uploadMediaView.js'
+
 import {
-  initProfileView,
-  renderProfileView
+  renderProfileView,
+  initProfileView
 } from './components/views/profileView.js'
-import { renderHeader } from './components/header.js'
-import { renderFooter } from './components/footer.js'
-import { showToast } from './toast.js'
 
 // 1) Montamos el HTML base: header + todas las vistas ocultas + footer
 const app = document.getElementById('app')
 app.innerHTML = `
-  ${renderHeader()}
-
-  <main>
-    <section id="login-view" class="view hidden">
-      ${renderLoginView()}
-    </section>
-
-    <section id="register-view" class="view hidden">
-      ${renderRegisterView()}
-    </section>
-
-    <section id="main-menu-view" class="view hidden">
-      ${renderHomeView()}
-    </section>
-
-    <section id="upcoming-events-view" class="view hidden">
-      ${renderUpcomingEventsView()}
-    </section>
-
-    <section id="attended-events-view" class="view hidden">
-      ${renderAttendedEventsView()}
-    </section>
-
-    <section id="gallery-view" class="view hidden">
-      ${renderGalleryView()}
-    </section>
-
-    <section id="upload-media-view" class="view hidden">
-      ${renderUploadMediaView()}
-    </section>
-
-    <section id="profile-view" class="view hidden">
-      ${renderProfileView()}
-    </section>
-  </main>
-
-  ${renderFooter()}
+${renderHeader()}
+<main>
+  ${renderLoginView()}
+  ${renderRegisterView()}
+  ${renderHomeView()}
+  ${renderUpcomingEventsView()}
+  ${renderAttendedEventsView()}
+  ${renderGalleryView()}
+  ${renderUploadMediaView()}
+  ${renderProfileView()}
+</main>
+${renderFooter()}
 `
 
 // 2) Al DOMContentLoaded inicializamos cada módulo y forzamos login

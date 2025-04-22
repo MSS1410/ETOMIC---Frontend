@@ -1,10 +1,11 @@
-// components/views/uploadMediaView.js
+// js/components/views/uploadMediaView.js
 import { apiFetch, API_URL } from '../../api.js'
 import { showToast } from '../../toast.js'
 import { showView } from '../../navigation.js'
 
-// Render function for Upload Media View
-
+/**
+ * Devuelve el HTML de la vista de subida de media.
+ */
 export function renderUploadMediaView() {
   return `
     <section id="upload-media-view" class="view hidden">
@@ -20,71 +21,75 @@ export function renderUploadMediaView() {
           id="upload-description"
           placeholder="Image description"
         />
-        <button type="submit">Click to Upload</button>
+        <button type="submit">Upload</button>
       </form>
-      <div id="upload-error" class="error"></div>
-      <div id="upload-success" class="success"></div>
+      <p id="upload-error" class="error"></p>
+      <p id="upload-success" class="success"></p>
     </section>
   `
 }
 
-// Initialization for Upload Media View
+/**
+ * Inicializa los listeners y la carga de datos para uploadMediaView.
+ */
 export function initUploadMediaView() {
-  loadSelect() // Populate events dropdown on view show
+  // 1) Carga de eventos en el <select>
+  ;(async function loadSelect() {
+    try {
+      const events = await apiFetch(`${API_URL}/events/attended`)
+      const sel = document.getElementById('upload-event-select')
+      sel.innerHTML = '<option value="">Select an attended event</option>'
+      events.forEach((ev) => {
+        const o = document.createElement('option')
+        o.value = ev._id
+        o.textContent = ev.title
+        sel.appendChild(o)
+      })
+    } catch (err) {
+      console.error('Error loading select:', err)
+    }
+  })()
 
-  // Handle form submission
+  // 2) Envío de formulario
   document
     .getElementById('upload-form')
-    .addEventListener('submit', async (e) => {
+    ?.addEventListener('submit', async (e) => {
       e.preventDefault()
-      const errorEl = document.getElementById('upload-error')
-      const successEl = document.getElementById('upload-success')
-      errorEl.textContent = ''
-      successEl.textContent = ''
+      const errEl = document.getElementById('upload-error')
+      const okEl = document.getElementById('upload-success')
+      errEl.textContent = ''
+      okEl.textContent = ''
 
       const eventId = document.getElementById('upload-event-select').value
-      const fileInput = document.getElementById('upload-file')
-      const description = document.getElementById('upload-description').value
+      const file = document.getElementById('upload-file').files[0]
+      const desc = document.getElementById('upload-description').value
 
-      const formData = new FormData()
-      formData.append('event', eventId)
-      formData.append('image', fileInput.files[0])
-      formData.append('description', description)
+      if (!eventId || !file) {
+        return showToast('Please select event and file')
+      }
+
+      const form = new FormData()
+      form.append('event', eventId)
+      form.append('image', file)
+      form.append('description', desc)
 
       try {
         await apiFetch(`${API_URL}/event-media`, {
           method: 'POST',
-          body: formData,
-          headers: {} // Let fetch set multipart/form-data boundary
+          body: form,
+          headers: {} // multipart boundary lo pone fetch
         })
-        successEl.textContent = 'Media uploaded successfully!'
+        okEl.textContent = 'Upload successful!'
         showToast('Media uploaded successfully!')
       } catch (err) {
-        errorEl.textContent = err.message
+        errEl.textContent = err.message
       }
     })
 
-  // Home button navigates back to main menu
+  // 3) Botón “MyEtomic” para volver al home
   document
     .getElementById('upload-home-button')
-    .addEventListener('click', () => {
+    ?.addEventListener('click', () => {
       showView('main-menu-view', true)
     })
-}
-
-// Helper to load attended events into the select
-async function loadSelect() {
-  try {
-    const events = await apiFetch(`${API_URL}/events/attended`)
-    const selectEl = document.getElementById('upload-event-select')
-    selectEl.innerHTML = `<option value="">Select an attended event</option>`
-    events.forEach((event) => {
-      const option = document.createElement('option')
-      option.value = event._id
-      option.textContent = event.title
-      selectEl.appendChild(option)
-    })
-  } catch (error) {
-    console.error('Error loading attended events for upload:', error)
-  }
 }

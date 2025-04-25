@@ -1,0 +1,58 @@
+/* Header para login / registro */
+.auth-header {
+  background: #3e1717;
+  padding: 2rem;
+  text-align: center;
+}
+.auth-header-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+}
+.auth-logo {
+  width: 50px;
+  height: auto;
+}
+.auth-header h1 {
+  color: #fff;
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+/* Header global de la app */
+.app-header {
+  background: #3e1717;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+.app-header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.app-logo {
+  width: 40px;
+  height: auto;
+}
+.app-title {
+  color: #fff;
+  font-size: 1.8rem;
+  margin: 0;
+}
+.app-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 1.5rem;
+}
+.app-nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+}
+.app-nav a:hover {
+  text-decoration: underline;
+}

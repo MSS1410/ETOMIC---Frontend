@@ -1,6 +1,9 @@
 // js/app.js
-import { renderHeader } from './components//header.js'
-import { renderFooter } from './components//footer.js'
+import {
+  renderAuthHeader,
+  renderAppHeader
+} from './components/layout/header.js'
+import { renderFooter } from './components/layout/footer.js'
 import { showView, goBack } from './navigation.js'
 
 import { renderLoginView, initLoginView } from './components/views/loginView.js'
@@ -40,7 +43,8 @@ import {
 // 1) Montamos el HTML base: header + todas las vistas ocultas + footer
 const app = document.getElementById('app')
 app.innerHTML = `
-${renderHeader()}
+<div id="header-container">${renderAuthHeader()}</div>
+
 <main>
   ${renderLoginView()}
   ${renderRegisterView()}
@@ -69,3 +73,19 @@ document.addEventListener('DOMContentLoaded', () => {
   // Forzamos que la primera vista al cargar sea la de Login
   showView('login-view', true)
 })
+
+// dentro de initLoginView si se produce el login con exito;
+
+export function initLoginView() {
+  document
+    .getElementById('login-form')
+    .addEventListener('submit', async (event) => {
+      event.preventDefault()
+      //si el loggin es ok
+      localStorage.setItem('authToken', token)
+      //reemplazo de header
+      document.getElementById('header-container').innerHTML = renderAppHeader()
+      // vista home
+      showView('main-menu-view', true)
+    })
+}

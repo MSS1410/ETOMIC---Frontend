@@ -17,7 +17,7 @@ export function renderAppHeader() {
     <header class="app-header">
       <div class="app-header-left">
         <img src="./assets/e-logo.png" alt="ETOMIC Logo" class="app-logo"/>
-        <h1 class="app-title">ETOMIC</h1>
+        <h1 class="app-title">Electronic Techno Music Events </h1>
       </div>
       <nav class="app-nav">
         <ul>

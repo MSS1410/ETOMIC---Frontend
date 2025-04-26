@@ -1,4 +1,6 @@
-// js/components/views/registerView.js
+import { renderAppHeader } from '../layout/header.js'
+import { showView } from '../../navigation.js'
+import { apiFetch, API_URL, setAuthToken } from '../../api.js'
 
 /**
  * Renderiza la vista de registro.
@@ -44,25 +46,28 @@ export function initRegisterView() {
   // Envío de formulario
   document
     .getElementById('register-form')
-    .addEventListener('submit', async (e) => {
-      e.preventDefault()
+    .addEventListener('submit', async (event) => {
+      event.preventDefault()
       const name = document.getElementById('register-name').value
       const email = document.getElementById('register-email').value
       const password = document.getElementById('register-password').value
       try {
-        await apiFetch(`${API_URL}/users/register`, {
+        // Registro y obtención de token
+        const { token } = await apiFetch(`${API_URL}/users/register`, {
           method: 'POST',
           body: JSON.stringify({ name, email, password })
         })
-        localStorage.removeItem('authToken')
-        authToken = null
-        showView('login-view')
+
+        // Limpiar token previo (si hubiera)
+        setAuthToken(null)
+        // Redirigir a login para que pase por el flujo de autenticación
+        showView('login-view', true)
       } catch (error) {
         document.getElementById('register-error').textContent = error.message
       }
     })
 
-  // Toggle password
+  // Toggle mostrar/ocultar password
   document
     .getElementById('toggle-register-password')
     .addEventListener('click', () => {
@@ -79,6 +84,6 @@ export function initRegisterView() {
   // Volver a login
   document.getElementById('show-login').addEventListener('click', (e) => {
     e.preventDefault()
-    showView('login-view')
+    showView('login-view', true)
   })
 }

@@ -1,6 +1,6 @@
 // js/components/views/galleryView.js
 import { apiFetch, API_URL } from '../../api.js'
-import { showView } from '../../navigation.js'
+import { goBack, showView } from '../../navigation.js'
 
 /**
  * Devuelve el HTML de la vista de galería.
@@ -8,6 +8,7 @@ import { showView } from '../../navigation.js'
 export function renderGalleryView() {
   return `
     <section id="gallery-view" class="view hidden">
+    <button class="back-btn" id="gallery-back-btn">Back</button>
       <div class="search-container">
         <input type="text" id="gallery-search" placeholder="Search gallery..." />
       </div>
@@ -21,6 +22,13 @@ export function renderGalleryView() {
  * Inicializa los listeners y la carga de datos para galleryView.
  */
 export function initGalleryView() {
+  //atras btn
+  document
+    .getElementById('gallery-back-btn')
+    ?.addEventListener('click', (event) => {
+      event.preventDefault()
+      goBack()
+    })
   let galleryData = []
 
   // 1) Carga inicial

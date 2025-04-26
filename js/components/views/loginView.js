@@ -1,6 +1,6 @@
 import { apiFetch, API_URL, setAuthToken } from '../../api.js'
 import { showView } from '../../navigation.js'
-// js/components/views/loginView.js
+import { renderAppHeader } from '../layout/header.js'
 
 /**
  * Renderiza la vista de login.
@@ -10,11 +10,11 @@ export function renderLoginView() {
     <section id="login-view" class="view login-page">
       <div class="login-container-mix">
         <div class="login-left">
-          <h2>Acces to your account</h2>
+          <h2>Access to your account</h2>
           <form id="login-form">
             <label for="login-email">Email</label>
             <input type="email" id="login-email" name="email" placeholder="Email" required />
-            <label for="login-password">Password*</label>
+            <label for="login-password">Password</label>
             <div class="password-field">
               <input type="password" id="login-password" name="password" placeholder="Password" required />
               <button type="button" id="toggle-password" class="toggle-pwd-btn">Show</button>
@@ -38,7 +38,6 @@ export function renderLoginView() {
  */
 export function initLoginView() {
   const form = document.getElementById('login-form')
-  // Envío de formulario
   form.addEventListener('submit', async (e) => {
     e.preventDefault()
     const email = document.getElementById('login-email').value
@@ -49,6 +48,10 @@ export function initLoginView() {
         body: JSON.stringify({ email, password })
       })
       setAuthToken(token)
+
+      // Swap header a vista de aplicación autenticada
+      document.getElementById('header-container').innerHTML = renderAppHeader()
+      // Ir a vista principal
       showView('main-menu-view', true)
     } catch (error) {
       document.getElementById('login-error').textContent = error.message
@@ -71,6 +74,6 @@ export function initLoginView() {
   // Ir a registro
   document.getElementById('show-register').addEventListener('click', (e) => {
     e.preventDefault()
-    showView('register-view')
+    showView('register-view', true)
   })
 }

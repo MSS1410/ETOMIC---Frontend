@@ -1,6 +1,6 @@
 // js/components/views/attendedEventsView.js
 import { apiFetch, API_URL } from '../../api.js'
-import { showView } from '../../navigation.js'
+import { goBack, showView } from '../../navigation.js'
 
 /**
  * Devuelve el HTML de la vista de eventos asistidos.
@@ -8,6 +8,8 @@ import { showView } from '../../navigation.js'
 export function renderAttendedEventsView() {
   return `
     <section id="attended-events-view" class="view hidden">
+    <button class="back-btn" id="attended-back-btn">Back</button>
+
       <div class="search-container">
         <input type="text" id="attended-search" placeholder="Search attended events..." />
       </div>
@@ -20,6 +22,13 @@ export function renderAttendedEventsView() {
  * Inicializa los listeners y la carga de datos para attendedEventsView.
  */
 export function initAttendedEventsView() {
+  //btn Atras
+  document
+    .getElementById('attended-back-btn')
+    ?.addEventListener('click', (event) => {
+      event.preventDefault()
+      goBack()
+    })
   let attendedEventsData = []
 
   async function loadList() {
@@ -69,9 +78,10 @@ export function initAttendedEventsView() {
         <img src="${ev.image}" alt="${ev.title}" />
         <div class="event-info">
           <h3>${ev.title}</h3>
-          <p>${new Date(ev.date).toLocaleDateString()}</p>
-          <button class="view-event-btn">View Event</button>
-          <button class="view-media-btn">View Media</button>
+          <h4>${new Date(ev.date).toLocaleDateString()}</h4>
+          
+          <button class="view-event-btn" id="viewEvent">View Event</button>
+          <button class="view-media-btn" id="viewMedia">View Media</button>
         </div>
       </div>
     `

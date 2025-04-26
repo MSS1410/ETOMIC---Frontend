@@ -1,17 +1,27 @@
 // js/components/views/upcomingEventsView.js
 import { apiFetch, API_URL } from '../../api.js'
-import { showView } from '../../navigation.js'
+import { showView, goBack } from '../../navigation.js'
 
 /**
  * Devuelve el HTML de la vista de lista de próximos eventos.
  */
+
 export function renderUpcomingEventsView() {
   return `
     <section id="upcoming-events-view" class="view hidden">
+      <button class="back-btn" id="upcoming-back-btn">Back</button>
       <div class="search-container">
-        <input type="text" id="event-search" placeholder="Search events..." />
+        <input type="text" id="event-search" placeholder="Buscar eventos..." />
       </div>
       <div class="events-list" id="upcoming-events-list"></div>
+
+      <!-- Modal para el flyer -->
+      <div class="modalFlyer hidden" id="flyer-modal">
+        <div class="modalFlyer-content">
+          <span class="close-btn" id="flyer-close-btn">&times;</span>
+          <img src="" alt="Event Flyer" id="flyer-image" />
+        </div>
+      </div>
     </section>
   `
 }
@@ -20,8 +30,15 @@ export function renderUpcomingEventsView() {
  * Inicializa los listeners y la carga de datos para upcomingEventsView.
  */
 export function initUpcomingEventsView() {
+  // Botón ATRÁS
+  document
+    .getElementById('upcoming-back-btn')
+    ?.addEventListener('click', (e) => {
+      e.preventDefault()
+      goBack()
+    })
+
   let upcomingEventsData = []
-  //  1 carga de datos+
 
   async function loadList() {
     try {
@@ -34,7 +51,7 @@ export function initUpcomingEventsView() {
   }
   loadList()
 
-  // 2) Filtrado en tiempo real
+  // Filtrado en tiempo real
   document.getElementById('event-search')?.addEventListener('input', (e) => {
     const term = e.target.value.toLowerCase()
     renderList(
@@ -42,32 +59,52 @@ export function initUpcomingEventsView() {
     )
   })
 
-  // 3) Click en cada evento para ir a la vista singular
+  // Click en botones de cada evento
   document
     .getElementById('upcoming-events-list')
     ?.addEventListener('click', (e) => {
       const item = e.target.closest('.event-item')
       if (!item) return
-      const id = item.dataset.eventId
-      showView('upcoming-event-singular-view')
-      // aquí deberías llamar a tu función loadSingularUpcoming(id)
+      if (e.target.classList.contains('view-flyer-btn')) {
+        const flyerUrl = item.dataset.flyer
+        openFlyerModal(flyerUrl)
+      } else if (e.target.classList.contains('buy-tickets-btn')) {
+        // TODO: Lógica de compra de entradas
+      }
     })
+
+  // Cerrar modal flyer
+  document.getElementById('flyer-close-btn')?.addEventListener('click', () => {
+    document.getElementById('flyer-modal').classList.add('hidden')
+  })
+
+  function openFlyerModal(url) {
+    const modal = document.getElementById('flyer-modal')
+    const img = document.getElementById('flyer-image')
+    img.src = url
+    modal.classList.remove('hidden')
+  }
 
   function renderList(events) {
     const container = document.getElementById('upcoming-events-list')
     if (!events.length) {
-      container.innerHTML = `<p>No upcoming events found.</p>`
+      container.innerHTML = `<p>No se encontraron eventos próximos.</p>`
       return
     }
     container.innerHTML = events
       .map(
         (ev) => `
-      <div class="event-item" data-event-id="${ev._id}">
+      <div class="event-item" data-event-id="${ev._id}" data-flyer="${
+          ev.flyerUrl
+        }">
         <img src="${ev.image}" alt="${ev.title}" />
         <div class="event-info">
           <h3>${ev.title}</h3>
-          <p>${new Date(ev.date).toLocaleDateString()}</p>
+          <h4>${new Date(ev.date).toLocaleDateString()}</h4>
           <p>${ev.location}</p>
+          <p class="event-description">${ev.description}</p>
+          <button class="view-flyer-btn" id="flyer">See Flyer</button>
+          <button class="buy-tickets-btn" id="buyTickets">Buy Tickets</button>
         </div>
       </div>
     `

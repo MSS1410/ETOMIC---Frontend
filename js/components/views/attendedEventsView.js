@@ -1,19 +1,39 @@
-// js/components/views/attendedEventsView.js
 import { apiFetch, API_URL } from '../../api.js'
-import { goBack, showView } from '../../navigation.js'
+import { showView, goBack } from '../../navigation.js'
 
 /**
- * Devuelve el HTML de la vista de eventos asistidos.
+ * Renderiza la vista de eventos asistidos.
  */
 export function renderAttendedEventsView() {
   return `
-    <section id="attended-events-view" class="view hidden">
-    <button class="back-btn" id="attended-back-btn">Back</button>
 
+  <!-- Lista de eventos asistidos -->
+
+    <section id="attended-events-view" class="view hidden">
+      <button class="back-btn" id="attended-back-btn">Atrás</button>
       <div class="search-container">
-        <input type="text" id="attended-search" placeholder="Search attended events..." />
+        <input type="text" id="attended-search" placeholder="Buscar eventos asistidos..." />
       </div>
       <div class="events-list" id="attended-full-list"></div>
+
+
+      <!-- Vista singular de evento asistido -->
+
+      <section id="attended-event-singular-view" class="view hidden">
+        <button class="back-btn" id="attended-back-to-list-btn">Atrás</button>
+        <div id="attended-event-detail"></div>
+      </section>
+
+
+      
+      <!-- Modal de media del evento -->
+
+      <div id="attended-event-gallery-view" class="modal hidden">
+        <div class="modal-content">
+          <button class="modal-close-btn" id="gallery-close-btn">&times;</button>
+          <div id="attended-event-gallery-container"></div>
+        </div>
+      </div>
     </section>
   `
 }
@@ -22,14 +42,25 @@ export function renderAttendedEventsView() {
  * Inicializa los listeners y la carga de datos para attendedEventsView.
  */
 export function initAttendedEventsView() {
-  //btn Atras
+  // Asegura el modal de media
+  document
+    .getElementById('gallery-close-btn')
+    ?.addEventListener('click', () => {
+      document
+        .getElementById('attended-event-gallery-view')
+        .classList.add('hidden')
+    })
+
+  // Botón Atrás
   document
     .getElementById('attended-back-btn')
-    ?.addEventListener('click', (event) => {
-      event.preventDefault()
+    ?.addEventListener('click', (e) => {
+      e.preventDefault()
       goBack()
     })
+
   let attendedEventsData = []
+  const listContainer = document.getElementById('attended-full-list')
 
   async function loadList() {
     try {
@@ -37,55 +68,112 @@ export function initAttendedEventsView() {
       attendedEventsData = events
       renderList(events)
     } catch (err) {
-      console.error('Error loading attended events:', err)
+      console.error('Error cargando eventos asistidos:', err)
     }
   }
+  loadList()
 
-  // 2) Filtrado
+  // Filtrado en vivo
   document.getElementById('attended-search')?.addEventListener('input', (e) => {
     const term = e.target.value.toLowerCase()
     renderList(
       attendedEventsData.filter((ev) => ev.title.toLowerCase().includes(term))
     )
   })
-  loadList()
-  // 3) Click en “View Event” o “View Media”
-  document
-    .getElementById('attended-full-list')
-    ?.addEventListener('click', (e) => {
-      const item = e.target.closest('.event-item')
-      if (!item) return
-      const id = item.dataset.eventId
-      if (e.target.classList.contains('view-event-btn')) {
-        showView('attended-event-singular-view')
-        // aquí loadSingularAttended(id)
-      } else if (e.target.classList.contains('view-media-btn')) {
-        showView('attended-event-gallery-view')
-        // aquí loadAttendedEventGallery(id)
-      }
-    })
 
   function renderList(events) {
-    const container = document.getElementById('attended-full-list')
     if (!events.length) {
-      container.innerHTML = `<p>You haven't attended any events yet.</p>`
+      listContainer.innerHTML = `<p>No has asistido a ningún evento aún.</p>`
       return
     }
-    container.innerHTML = events
+    listContainer.innerHTML = events
       .map(
         (ev) => `
       <div class="event-item" data-event-id="${ev._id}">
         <img src="${ev.image}" alt="${ev.title}" />
         <div class="event-info">
           <h3>${ev.title}</h3>
-          <h4>${new Date(ev.date).toLocaleDateString()}</h4>
+          <p>${new Date(ev.date).toLocaleDateString()}</p>
           
-          <button class="view-event-btn" id="viewEvent">View Event</button>
-          <button class="view-media-btn" id="viewMedia">View Media</button>
+            <button class="view-event-btn" id="viewEvent">Show Event</button>
+            <button class="view-media-btn" id="viewMedia">Event media</button>
+          </div>
         </div>
       </div>
     `
       )
       .join('')
+    attachAttendedListeners()
+  }
+
+  // Engancha los clicks de “Ver evento” y “Ver media”
+  function attachAttendedListeners() {
+    listContainer.querySelectorAll('.view-event-btn').forEach((btn) => {
+      btn.addEventListener('click', (eve) => {
+        const id = eve.target.closest('.event-item').dataset.eventId
+        showEventDetail(id)
+      })
+    })
+    listContainer.querySelectorAll('.view-media-btn').forEach((btn) => {
+      btn.addEventListener('click', (eve) => {
+        const id = eve.target.closest('.event-item').dataset.eventId
+        showEventMedia(id)
+      })
+    })
+  }
+}
+
+/**
+ * Muestra la vista singular del evento asistido.
+ */
+async function showEventDetail(eventId) {
+  // 1) Cambia a la vista singular
+  showView('attended-event-singular-view', true)
+
+  // 2) Carga los datos del evento
+  try {
+    const ev = await apiFetch(`${API_URL}/events/${eventId}`)
+    // 3) Rellena el HTML de la vista detalle:
+    document.getElementById('attended-event-detail').innerHTML = `
+      <h2>${ev.title}</h2>
+      <p><strong>Fecha:</strong> ${new Date(ev.date).toLocaleDateString()}</p>
+      <p>${ev.description}</p>
+      <img src="${ev.image}" alt="${ev.title}" />
+    `
+  } catch (err) {
+    console.error('Error cargando detalle de evento:', err)
+  }
+}
+
+/**
+ * Muestra el modal con la galería de media del evento.
+ */
+async function showEventMedia(eventId) {
+  try {
+    // 1) Ir a la galería general
+    showView('gallery-view', true)
+
+    // 2) Traer solo la media de este evento
+    const media = await apiFetch(`${API_URL}/event-media/${eventId}`)
+
+    // 3) Rellenar el mosaic de la Galería
+    const mosaic = document.getElementById('gallery-mosaic-view')
+    mosaic.innerHTML = media
+      .map(
+        (m) => `
+        <div class="gallery-item">
+          <img src="${m.imageUrl}" alt="${m.description}" />
+          <p>${m.description}</p>
+        </div>
+      `
+      )
+      .join('')
+
+    // 4) (Re)iniciar el slider si lo usas aquí:
+    if (typeof initGalleryCarousel === 'function') {
+      initGalleryCarousel()
+    }
+  } catch (err) {
+    console.error('Error cargando media de evento:', err)
   }
 }

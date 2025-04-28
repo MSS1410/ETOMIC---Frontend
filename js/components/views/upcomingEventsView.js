@@ -62,13 +62,13 @@ export function initUpcomingEventsView() {
   // Click en botones de cada evento
   document
     .getElementById('upcoming-events-list')
-    ?.addEventListener('click', (e) => {
-      const item = e.target.closest('.event-item')
+    ?.addEventListener('click', (eve) => {
+      const item = eve.target.closest('.event-item')
       if (!item) return
-      if (e.target.classList.contains('view-flyer-btn')) {
-        const flyerUrl = item.dataset.flyer
+      if (eve.target.classList.contains('view-flyer-btn')) {
+        const flyerUrl = eve.target.dataset.flyerUrl
         openFlyerModal(flyerUrl)
-      } else if (e.target.classList.contains('buy-tickets-btn')) {
+      } else if (eve.target.classList.contains('buy-tickets-btn')) {
         // TODO: Lógica de compra de entradas
       }
     })
@@ -83,6 +83,7 @@ export function initUpcomingEventsView() {
     const img = document.getElementById('flyer-image')
     img.src = url
     modal.classList.remove('hidden')
+    modal.classList.add('open')
   }
 
   function renderList(events) {
@@ -94,16 +95,15 @@ export function initUpcomingEventsView() {
     container.innerHTML = events
       .map(
         (ev) => `
-      <div class="event-item" data-event-id="${ev._id}" data-flyer="${
-          ev.flyerUrl
-        }">
+      <div class="event-item" data-event-id="${ev._id}">
         <img src="${ev.image}" alt="${ev.title}" />
         <div class="event-info">
           <h3>${ev.title}</h3>
           <h4>${new Date(ev.date).toLocaleDateString()}</h4>
           <p>${ev.location}</p>
           <p class="event-description">${ev.description}</p>
-          <button class="view-flyer-btn" id="flyer">See Flyer</button>
+          <button class="view-flyer-btn" data-flyer-url="${ev.flyer}" 
+          id="upcomingflyer">Show Flyer</button>
           <button class="buy-tickets-btn" id="buyTickets">Buy Tickets</button>
         </div>
       </div>

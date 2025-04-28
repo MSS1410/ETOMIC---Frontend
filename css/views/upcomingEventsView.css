@@ -81,12 +81,12 @@
 
 /* Botones: contenedor y estilos breves */
 
-#flyer,
+#upcomingflyer,
 #buyTickets {
   background: #392121;
   margin-top: 0.3rem;
 
-  width: 15%;
+  width: 25%;
   color: #fff;
   border: none;
 
@@ -96,7 +96,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   cursor: pointer;
 }
-#flyer:hover,
+#upcomingflyer:hover,
 .buy-tickets-btn:hover {
   background: #9f6f6f;
 }

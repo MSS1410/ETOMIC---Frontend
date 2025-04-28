@@ -10,7 +10,7 @@ export function renderAttendedEventsView() {
   <!-- Lista de eventos asistidos -->
 
     <section id="attended-events-view" class="view hidden">
-      <button class="back-btn" id="attended-back-btn">Atrás</button>
+      <button class="back-btn" id="attended-back-btn">Back</button>
       <div class="search-container">
         <input type="text" id="attended-search" placeholder="Buscar eventos asistidos..." />
       </div>
@@ -20,20 +20,11 @@ export function renderAttendedEventsView() {
       <!-- Vista singular de evento asistido -->
 
       <section id="attended-event-singular-view" class="view hidden">
-        <button class="back-btn" id="attended-back-to-list-btn">Atrás</button>
+        <button class="back-btn" id="attended-detail-back">Back to Events</button>
         <div id="attended-event-detail"></div>
       </section>
 
 
-      
-      <!-- Modal de media del evento -->
-
-      <div id="attended-event-gallery-view" class="modal hidden">
-        <div class="modal-content">
-          <button class="modal-close-btn" id="gallery-close-btn">&times;</button>
-          <div id="attended-event-gallery-container"></div>
-        </div>
-      </div>
     </section>
   `
 }
@@ -43,20 +34,19 @@ export function renderAttendedEventsView() {
  */
 export function initAttendedEventsView() {
   // Asegura el modal de media
-  document
-    .getElementById('gallery-close-btn')
-    ?.addEventListener('click', () => {
-      document
-        .getElementById('attended-event-gallery-view')
-        .classList.add('hidden')
-    })
 
   // Botón Atrás
   document
     .getElementById('attended-back-btn')
     ?.addEventListener('click', (e) => {
       e.preventDefault()
-      goBack()
+      showView('main-menu-view', true)
+    })
+
+  document
+    .getElementById('attended-detail-back')
+    ?.addEventListener('click', (ev) => {
+      ev.preventDefault(showView('attended-events-view', true))
     })
 
   let attendedEventsData = []
@@ -83,7 +73,7 @@ export function initAttendedEventsView() {
 
   function renderList(events) {
     if (!events.length) {
-      listContainer.innerHTML = `<p>No has asistido a ningún evento aún.</p>`
+      listContainer.innerHTML = `<p>No events assisted yet.</p>`
       return
     }
     listContainer.innerHTML = events
@@ -103,11 +93,11 @@ export function initAttendedEventsView() {
     `
       )
       .join('')
-    attachAttendedListeners()
+    actOnAttendedListeners()
   }
 
   // Engancha los clicks de “Ver evento” y “Ver media”
-  function attachAttendedListeners() {
+  function actOnAttendedListeners() {
     listContainer.querySelectorAll('.view-event-btn').forEach((btn) => {
       btn.addEventListener('click', (eve) => {
         const id = eve.target.closest('.event-item').dataset.eventId

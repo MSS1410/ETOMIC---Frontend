@@ -8,7 +8,7 @@ import { goBack, showView } from '../../navigation.js'
 export function renderGalleryView() {
   return `
     <section id="gallery-view" class="view hidden">
-    <button class="back-btn" id="gallery-back-btn">Back</button>
+    <button class="back-btn" id="galleryBack">Back</button>
       <div class="search-container">
         <input type="text" id="gallery-search" placeholder="Search gallery..." />
       </div>
@@ -23,12 +23,10 @@ export function renderGalleryView() {
  */
 export function initGalleryView() {
   //atras btn
-  document
-    .getElementById('gallery-back-btn')
-    ?.addEventListener('click', (event) => {
-      event.preventDefault()
-      goBack()
-    })
+  document.getElementById('galleryBack')?.addEventListener('click', (event) => {
+    event.preventDefault()
+    goBack()
+  })
   let galleryData = []
 
   // 1) Carga inicial

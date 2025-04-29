@@ -1,6 +1,6 @@
 // js/components/views/upcomingEventsView.js
-import { apiFetch, API_URL } from '../../api.js'
-import { showView, goBack } from '../../navigation.js'
+import { apiFetch, API_URL } from '../../../api.js'
+import { showView, goBack } from '../../../navigation.js'
 
 /**
  * Devuelve el HTML de la vista de lista de próximos eventos.

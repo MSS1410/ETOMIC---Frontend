@@ -19,17 +19,21 @@ import { renderHomeView, initHomeView } from './components/views/homeView.js'
 import {
   renderUpcomingEventsView,
   initUpcomingEventsView
-} from './components/views/upcomingEventsView.js'
+} from './components/views/upcoming/upcomingEventsView.js'
 
 import {
   renderAttendedEventsView,
   initAttendedEventsView
-} from './components/views/attendedEventsView.js'
+} from './components/views/attended/attendedEventsView.js'
 
+import {
+  renderAttendedEventDetailView,
+  initAttendedEventDetailView
+} from './components/views/attended/attendedEventDetailView.js'
 import {
   renderGalleryView,
   initGalleryView
-} from './components/views/galleryView.js'
+} from './components/views/gallery/galleryView.js'
 
 import {
   renderUploadMediaView,
@@ -52,6 +56,7 @@ app.innerHTML = `
   ${renderHomeView()}
   ${renderUpcomingEventsView()}
   ${renderAttendedEventsView()}
+  ${renderAttendedEventDetailView()}
   ${renderGalleryView()}
   ${renderUploadMediaView()}
   ${renderProfileView()}
@@ -67,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHomeView()
   initUpcomingEventsView()
   initAttendedEventsView()
+  initAttendedEventDetailView()
   initGalleryView()
   initUploadMediaView()
   initProfileView()

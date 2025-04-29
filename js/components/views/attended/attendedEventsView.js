@@ -1,5 +1,6 @@
-import { apiFetch, API_URL } from '../../api.js'
-import { showView, goBack } from '../../navigation.js'
+import { apiFetch, API_URL } from '../../../api.js'
+import { showView } from '../../../navigation.js'
+import { loadAttendedEventDetail } from './attendedEventDetailView.js'
 
 /**
  * Renderiza la vista de eventos asistidos.
@@ -15,6 +16,7 @@ export function renderAttendedEventsView() {
         <input type="text" id="attended-search" placeholder="Buscar eventos asistidos..." />
       </div>
       <div class="events-list" id="attended-full-list"></div>
+      </section>
 
 
       <!-- Vista singular de evento asistido -->
@@ -25,7 +27,7 @@ export function renderAttendedEventsView() {
       </section>
 
 
-    </section>
+    
   `
 }
 
@@ -78,16 +80,16 @@ export function initAttendedEventsView() {
     }
     listContainer.innerHTML = events
       .map(
-        (ev) => `
-      <div class="event-item" data-event-id="${ev._id}">
-        <img src="${ev.image}" alt="${ev.title}" />
-        <div class="event-info">
+        (ev) => ` 
+        <div class="event-item" data-event-id="${ev._id}">
+         <img src="${ev.image}" alt="${ev.title}" />
+         <div class="event-info">
           <h3>${ev.title}</h3>
           <p>${new Date(ev.date).toLocaleDateString()}</p>
           
-            <button class="view-event-btn" id="viewEvent">Show Event</button>
-            <button class="view-media-btn" id="viewMedia">Event media</button>
-          </div>
+          <button class="view-event-btn" id="viewEvent">Show Event</button>
+          <button class="view-media-btn" id="viewMedia">Event media</button>
+         </div>
         </div>
       </div>
     `
@@ -101,7 +103,7 @@ export function initAttendedEventsView() {
     listContainer.querySelectorAll('.view-event-btn').forEach((btn) => {
       btn.addEventListener('click', (eve) => {
         const id = eve.target.closest('.event-item').dataset.eventId
-        showEventDetail(id)
+        loadAttendedEventDetail(id)
       })
     })
     listContainer.querySelectorAll('.view-media-btn').forEach((btn) => {
@@ -110,28 +112,6 @@ export function initAttendedEventsView() {
         showEventMedia(id)
       })
     })
-  }
-}
-
-/**
- * Muestra la vista singular del evento asistido.
- */
-async function showEventDetail(eventId) {
-  // 1) Cambia a la vista singular
-  showView('attended-event-singular-view', true)
-
-  // 2) Carga los datos del evento
-  try {
-    const ev = await apiFetch(`${API_URL}/events/${eventId}`)
-    // 3) Rellena el HTML de la vista detalle:
-    document.getElementById('attended-event-detail').innerHTML = `
-      <h2>${ev.title}</h2>
-      <p><strong>Fecha:</strong> ${new Date(ev.date).toLocaleDateString()}</p>
-      <p>${ev.description}</p>
-      <img src="${ev.image}" alt="${ev.title}" />
-    `
-  } catch (err) {
-    console.error('Error cargando detalle de evento:', err)
   }
 }
 

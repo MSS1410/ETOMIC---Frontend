@@ -1,6 +1,6 @@
 // js/components/views/galleryView.js
-import { apiFetch, API_URL } from '../../api.js'
-import { goBack, showView } from '../../navigation.js'
+import { apiFetch, API_URL } from '../../../api.js'
+import { goBack, showView } from '../../../navigation.js'
 
 /**
  * Devuelve el HTML de la vista de galería.
@@ -8,12 +8,23 @@ import { goBack, showView } from '../../navigation.js'
 export function renderGalleryView() {
   return `
     <section id="gallery-view" class="view hidden">
-    <button class="back-btn" id="galleryBack">Back</button>
-      <div class="search-container">
-        <input type="text" id="gallery-search" placeholder="Search gallery..." />
+
+      <div class="gallery-header">
+        <button id="btn-mosaic" class="toggle-mode-btn">Mosaico</button>
+        <button id="btn-list" class="toggle-mode-btn">Listado</button>
       </div>
+      
       <div id="gallery-mosaic-view" class="gallery-mosaic"></div>
       <div id="gallery-list-view" class="gallery-list hidden"></div>
+
+
+      <!-- Modal  -->
+      <div id="gallery-modal-view" class="modalGallery hidden">
+        <div class="modalGallery-content">
+          <button class="close-btn" id="gallery-modal-close">&times;</button>
+          <img src="" alt="Modal Image" id="gallery-modal-img" />
+        </div>
+      </div>
     </section>
   `
 }

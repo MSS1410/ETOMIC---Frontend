@@ -30,6 +30,7 @@ import {
   renderAttendedEventDetailView,
   initAttendedEventDetailView
 } from './components/views/attended/attendedEventDetailView.js'
+
 import {
   renderGalleryView,
   initGalleryView
@@ -74,6 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initAttendedEventsView()
   initAttendedEventDetailView()
   initGalleryView()
+
   initUploadMediaView()
   initProfileView()
 

@@ -35,22 +35,23 @@
 }
 #attended-event-info-container img {
   width: 100%;
+  height: auto;
   border-radius: 8px;
   margin-top: 2rem;
 }
 
 /* Botón Home/Back */
-#attended-back {
+#attended-detail-back {
   background-color: #7f4f4f;
   color: #fff;
   border: none;
-  width: 10%;
+  width: 12%;
   padding: 0.5rem 1rem;
   border-radius: 4px;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   cursor: pointer;
   margin: 1rem;
 }
-.attended-back:hover {
+#attended-detail-back:hover {
   background-color: #9f6f6f;
 }

@@ -1,42 +1,42 @@
-// js/components/views/attendedEventDetailView.js
 import { apiFetch, API_URL } from '../../../api.js'
 import { showView } from '../../../navigation.js'
+import { initGallerySingularView } from '../gallery/gallerySingularView.js'
 
-/**
- * Renderiza la vista detalle de un evento asistido.
- */
 export function renderAttendedEventDetailView() {
   return `
     <section id="attended-event-detail-view" class="view hidden">
-      <button class="back-btn" id="attended-back">Attended List</button>
+      <button class="back-btn" id="attended-detail-back">Back to Events</button>
+      
       <div id="attended-event-info-container"></div>
     </section>
   `
 }
 
-/**
- * Inicializa los listeners para la vista detalle.
- */
 export function initAttendedEventDetailView() {
-  document.getElementById('attended-back')?.addEventListener('click', (e) => {
-    e.preventDefault()
-    showView('attended-events-view', true)
-  })
+  document
+    .getElementById('attended-detail-back')
+    ?.addEventListener('click', (e) => {
+      e.preventDefault()
+      showView('attended-events-view', true)
+    })
 }
 
-/**
- * Carga y muestra los datos del evento seleccionado.
- * @param {string} eventId
- */
 export async function loadAttendedEventDetail(eventId) {
-  // 1) Mostrar la vista detalle
+  const app = document.getElementById('app')
+  if (!document.getElementById('attended-event-detail-view')) {
+    app.insertAdjacentHTML('beforeend', renderAttendedEventDetailView())
+    initAttendedEventDetailView()
+  }
   showView('attended-event-detail-view', true)
 
-  // 2) Fetch de datos
-  const container = document.getElementById('attended-event-info-container')
+  // Attach Event Media button
+
+  const infoContainer = document.getElementById('attended-event-info-container')
+  infoContainer.innerHTML = ''
+
   try {
     const ev = await apiFetch(`${API_URL}/events/${eventId}`)
-    container.innerHTML = `
+    infoContainer.innerHTML = `
       <div class="detail-card">
         <h2>${ev.title}</h2>
         <p><strong>Fecha:</strong> ${new Date(ev.date).toLocaleDateString()}</p>
@@ -46,6 +46,7 @@ export async function loadAttendedEventDetail(eventId) {
     `
   } catch (err) {
     console.error('Error cargando detalle de evento:', err)
-    container.innerHTML = `<p class="error">No se pudo cargar el detalle del evento.</p>`
+    infoContainer.innerHTML =
+      '<p class="error">No se pudo cargar el detalle del evento.</p>'
   }
 }

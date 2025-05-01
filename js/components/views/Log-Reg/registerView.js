@@ -1,6 +1,6 @@
-import { renderAppHeader } from '../layout/header.js'
-import { showView } from '../../navigation.js'
-import { apiFetch, API_URL, setAuthToken } from '../../api.js'
+import { renderAppHeader } from '../../layout/header.js'
+import { showView } from '../../../navigation.js'
+import { apiFetch, API_URL, setAuthToken } from '../../../api.js'
 
 /**
  * Renderiza la vista de registro.

@@ -1,5 +1,9 @@
 // header para login y registro
 
+import { showView } from '../../../navigation'
+import { initUploadMediaView } from '../views/upload/uploadMediaView'
+import { initProfileView } from '../views/profile/profileView'
+
 export function renderAuthHeader() {
   return `
     <header class="auth-header">
@@ -28,4 +32,15 @@ export function renderAppHeader() {
       </nav>
     </header>
   `
+}
+
+export function innitAppHeader() {
+  document.getElementById('nav-upload')?.addEventListener('click', (ev) => {
+    ev.preventDefault()
+    initUploadMediaView()
+  })
+  document.getElementById('nav-profile')?.addEventListener('click', (ev) => {
+    ev.preventDefault()
+    initProfileView()
+  })
 }

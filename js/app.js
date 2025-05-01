@@ -1,20 +1,26 @@
 // js/app.js
 import {
   renderAuthHeader,
-  renderAppHeader
+  renderAppHeader,
+  innitAppHeader
 } from './components/layout/header.js'
 
-import { renderFooter } from './components/layout/footer.js'
-import { showView, goBack } from './navigation.js'
+import { showViewBack } from './navigation.js'
 
-import { renderLoginView, initLoginView } from './components/views/loginView.js'
+import {
+  renderLoginView,
+  initLoginView
+} from './components/views/Log-Reg/loginView.js'
 
 import {
   initRegisterView,
   renderRegisterView
-} from './components/views/registerView.js'
+} from './components/views/Log-Reg/registerView.js'
 
-import { renderHomeView, initHomeView } from './components/views/homeView.js'
+import {
+  renderHomeView,
+  initHomeView
+} from './components/views/home/homeView.js'
 
 import {
   renderUpcomingEventsView,
@@ -39,17 +45,22 @@ import {
 import {
   renderUploadMediaView,
   initUploadMediaView
-} from './components/views/uploadMediaView.js'
+} from './components/views/upload/uploadMediaView.js'
 
 import {
   renderProfileView,
   initProfileView
-} from './components/views/profileView.js'
+} from './components/views/profile/profileView.js'
+
+import { renderFooter } from './components/layout/footer.js'
 
 // 1) Montamos el HTML base: header + todas las vistas ocultas + footer
 const app = document.getElementById('app')
 app.innerHTML = `
-<div id="header-container">${renderAuthHeader()}</div>
+<div id="header-container">
+${renderAuthHeader()}
+${renderAuthHeader()}
+</div>
 
 <main>
   ${renderLoginView()}
@@ -75,10 +86,14 @@ document.addEventListener('DOMContentLoaded', () => {
   initAttendedEventsView()
   initAttendedEventDetailView()
   initGalleryView()
-
   initUploadMediaView()
   initProfileView()
 
+  //config header para navegacion
+
+  innitAppHeader()
+
+  document.querySelector('.app-header').classList.add('hidden')
   // Forzamos que la primera vista al cargar sea la de Login
   showView('login-view', true)
 })

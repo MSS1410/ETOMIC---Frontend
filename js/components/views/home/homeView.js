@@ -1,5 +1,5 @@
-import { showView } from '../../navigation.js'
-import { apiFetch, API_URL } from '../../api.js'
+import { showView } from '../../../navigation.js'
+import { apiFetch, API_URL } from '../../../api.js'
 
 /**
  * Render the Home (Main Menu) view, showing Upcoming, Attended, and Gallery sliders.

@@ -1,6 +1,6 @@
-import { apiFetch, API_URL, setAuthToken } from '../../api.js'
-import { showView } from '../../navigation.js'
-import { renderAppHeader } from '../layout/header.js'
+import { apiFetch, API_URL, setAuthToken } from '../../../api.js'
+import { showView } from '../../../navigation.js'
+import { renderAppHeader } from '../../layout/header.js'
 
 /**
  * Renderiza la vista de login.

@@ -1,8 +1,7 @@
 // header para login y registro
 
-import { showView } from '../../../navigation'
-import { initUploadMediaView } from '../views/upload/uploadMediaView'
-import { initProfileView } from '../views/profile/profileView'
+import { initUploadMediaView } from '../views/upload/uploadMediaView.js'
+import { initProfileView } from '../views/profile/profileView.js'
 
 export function renderAuthHeader() {
   return `

@@ -1,6 +1,5 @@
 import { apiFetch, API_URL } from '../../../api.js'
 import { showView } from '../../../navigation.js'
-import { initGallerySingularView } from '../gallery/gallerySingularView.js'
 
 export function renderAttendedEventDetailView() {
   return `

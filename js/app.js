@@ -1,11 +1,7 @@
 // js/app.js
-import {
-  renderAuthHeader,
-  renderAppHeader,
-  innitAppHeader
-} from './components/layout/header.js'
+import { renderAuthHeader, innitAppHeader } from './components/layout/header.js'
 
-import { showViewBack } from './navigation.js'
+import { showView } from './navigation.js'
 
 import {
   renderLoginView,
@@ -59,7 +55,7 @@ const app = document.getElementById('app')
 app.innerHTML = `
 <div id="header-container">
 ${renderAuthHeader()}
-${renderAuthHeader()}
+
 </div>
 
 <main>
@@ -93,7 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   innitAppHeader()
 
-  document.querySelector('.app-header').classList.add('hidden')
   // Forzamos que la primera vista al cargar sea la de Login
   showView('login-view', true)
 })

@@ -50,6 +50,8 @@ import {
 
 import { renderFooter } from './components/layout/footer.js'
 
+//funcion para alternar de header y tener los link OK
+
 // 1) Montamos el HTML base: header + todas las vistas ocultas + footer
 const app = document.getElementById('app')
 app.innerHTML = `
@@ -77,6 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Inicializaciones (añaden event‑listeners, fetch iniciales, etc)
   initLoginView()
   initRegisterView()
+
   initHomeView()
   initUpcomingEventsView()
   initAttendedEventsView()
@@ -85,9 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initUploadMediaView()
   initProfileView()
 
-  //config header para navegacion
-
-  innitAppHeader()
+  //config header para navegacion des
 
   // Forzamos que la primera vista al cargar sea la de Login
   showView('login-view', true)

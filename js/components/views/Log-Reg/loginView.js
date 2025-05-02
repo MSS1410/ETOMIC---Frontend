@@ -1,10 +1,11 @@
 import { apiFetch, API_URL, setAuthToken } from '../../../api.js'
 import { showView } from '../../../navigation.js'
-import { renderAppHeader } from '../../layout/header.js'
-
+import { innitAppHeader, renderAppHeader } from '../../layout/header.js'
+import { initProfileView } from '../profile/profileView.js'
 /**
  * Renderiza la vista de login.
  */
+
 export function renderLoginView() {
   return `
     <section id="login-view" class="view login-page">
@@ -42,6 +43,7 @@ export function initLoginView() {
     e.preventDefault()
     const email = document.getElementById('login-email').value
     const password = document.getElementById('login-password').value
+
     try {
       const { token } = await apiFetch(`${API_URL}/users/login`, {
         method: 'POST',
@@ -49,8 +51,12 @@ export function initLoginView() {
       })
       setAuthToken(token)
 
-      // Swap header a vista de aplicación autenticada
+      //montar header en dom
       document.getElementById('header-container').innerHTML = renderAppHeader()
+      //pongo los enlaces en activo
+      innitAppHeader()
+      initProfileView()
+
       // Ir a vista principal
       showView('main-menu-view', true)
     } catch (error) {

@@ -8,10 +8,17 @@ let authToken = localStorage.getItem('authToken')
  * @param {string} url - URL completa (API_URL + endpoint)
  * @param {object} options - { method, body, headers, ... }
  */
-export async function apiFetch(url, options = {}) {
+export async function apiFetch(endpoint, options = {}) {
+  // tener la url completa
+  const url = endpoint.startsWith('http') ? endpoint : `${API_URL}${endpoint}`
+
   const headers = {
-    'Content-Type': 'application/json',
     ...options.headers
+  }
+
+  // si no es FORMFdata , le añadire el content type a Json
+  if (!headers['Content-Type']) {
+    headers['Content-Type'] = 'application/json'
   }
 
   if (authToken) {

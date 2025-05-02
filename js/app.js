@@ -1,5 +1,5 @@
 // js/app.js
-import { renderAuthHeader, innitAppHeader } from './components/layout/header.js'
+import { renderAuthHeader } from './components/layout/header.js'
 
 import { showView } from './navigation.js'
 
@@ -50,8 +50,6 @@ import {
 
 import { renderFooter } from './components/layout/footer.js'
 
-//funcion para alternar de header y tener los link OK
-
 // 1) Montamos el HTML base: header + todas las vistas ocultas + footer
 const app = document.getElementById('app')
 app.innerHTML = `
@@ -79,16 +77,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // Inicializaciones (añaden event‑listeners, fetch iniciales, etc)
   initLoginView()
   initRegisterView()
-
   initHomeView()
   initUpcomingEventsView()
   initAttendedEventsView()
   initAttendedEventDetailView()
   initGalleryView()
   initUploadMediaView()
-  initProfileView()
 
-  //config header para navegacion des
+  //enlaces del appheader
 
   // Forzamos que la primera vista al cargar sea la de Login
   showView('login-view', true)

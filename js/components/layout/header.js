@@ -2,6 +2,7 @@
 
 import { initUploadMediaView } from '../views/upload/uploadMediaView.js'
 import { initProfileView } from '../views/profile/profileView.js'
+import { showView } from '../../navigation.js'
 
 export function renderAuthHeader() {
   return `
@@ -19,7 +20,7 @@ export function renderAppHeader() {
   return `
     <header class="app-header">
       <div class="app-header-left">
-        <img src="./assets/e-logo.png" alt="ETOMIC Logo" class="app-logo"/>
+        <img src="/assets/e-logo.png" alt="ETOMIC Logo" class="app-logo"/>
         <h1 class="app-title">Electronic Techno Music Events </h1>
       </div>
       <nav class="app-nav">
@@ -36,10 +37,12 @@ export function renderAppHeader() {
 export function innitAppHeader() {
   document.getElementById('nav-upload')?.addEventListener('click', (ev) => {
     ev.preventDefault()
+    showView('upload-media-view', true)
     initUploadMediaView()
   })
   document.getElementById('nav-profile')?.addEventListener('click', (ev) => {
     ev.preventDefault()
+    showView('profile-view', true)
     initProfileView()
   })
 }

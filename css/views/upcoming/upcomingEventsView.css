@@ -103,7 +103,7 @@
 
 /* Botón Atrás personalizado */
 #upcoming-back-btn {
-  background: #392121;
+  background-color: #7f4f4f;
   width: 15%;
   color: #fff;
   border: none;
@@ -116,7 +116,6 @@
 }
 #upcoming-back-btn:hover {
   background: #9f6f6f;
-  transform: translateY(-1px);
 }
 
 /* Responsive: apila en móvil */

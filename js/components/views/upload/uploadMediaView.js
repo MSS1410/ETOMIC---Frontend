@@ -1,6 +1,7 @@
 // js/components/views/uploadMediaView.js
 import { apiFetch, API_URL } from '../../../api.js'
 import { showToast } from '../../../toast.js'
+import { showView } from '../../../navigation.js'
 
 /**
  * Renderiza la estructura base de la vista de subida de media.
@@ -33,10 +34,12 @@ export function renderUploadMediaView() {
  */
 export async function initUploadMediaView() {
   // Botón Back: mostrar vista principal
-  document.getElementById('upload-media-back').addEventListener('click', () => {
-    // asume que showView se llama externamente cuando corresponde
-    showView('main-menu-view')
-  })
+  document
+    .getElementById('upload-media-back')
+    ?.addEventListener('click', (ev) => {
+      ev.preventDefault()
+      showView('main-menu-view', true)
+    })
 
   // Cargar eventos asistidos
   try {
@@ -69,11 +72,11 @@ export async function initUploadMediaView() {
 
     const formData = new FormData()
     formData.append('event', eventId)
-    formData.append('image', file)
+    formData.append('img', file)
     formData.append('description', desc)
 
     try {
-      await apiFetch(`${API_URL}/event-media`, {
+      await apiFetch(`${API_URL}/event-media/:eventId`, {
         method: 'POST',
         body: formData,
         headers: {}

@@ -11,15 +11,30 @@
 /* Base para html y body */
 html,
 body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  text-transform: capitalize;
   background-color: #4f1f1f;
   color: #fff;
-  height: 100%;
-  font-family: 'IBM Plex Sans' sans-serif;
-  text-transform: capitalize;
 }
-
+#app {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+}
 /* Control de visibilidad de secciones */
 .view {
+  flex: 1;
+  overflow-y: auto;
   display: none;
 }
 .view:not(.hidden) {
@@ -37,4 +52,7 @@ body {
 .success {
   color: #ddffdd;
   margin-top: 0.5rem;
+}
+footer {
+  flex-shrink: 0;
 }

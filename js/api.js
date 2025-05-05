@@ -1,5 +1,5 @@
 /* js/api.js */
-export const API_URL = 'http://localhost:3059/api/v1'
+export const API_URL = 'http://localhost:3060/api/v1'
 
 let authToken = localStorage.getItem('authToken')
 

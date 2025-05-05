@@ -8,7 +8,7 @@ export function renderAuthHeader() {
   return `
     <header class="auth-header">
       <div class="auth-header-content">
-        <img src="./assets/e-logo.png" alt="ETOMIC Logo" class="auth-logo"/>
+        <img src="../assets/elogo.png" alt="ETOMIC Logo" class="auth-logo"/>
         <h1>ETOMIC</h1>
       </div>
     </header>
@@ -20,7 +20,7 @@ export function renderAppHeader() {
   return `
     <header class="app-header">
       <div class="app-header-left">
-        <img src="/assets/e-logo.png" alt="ETOMIC Logo" class="app-logo"/>
+        <img src="../assets/elogo.png" alt="ETOMIC Logo" class="app-logo"/>
         <h1 class="app-title">Electronic Techno Music Events </h1>
       </div>
       <nav class="app-nav">

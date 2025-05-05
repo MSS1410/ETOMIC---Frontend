@@ -1,3 +1,10 @@
 export function renderFooter() {
-  return `<footer><p>&copy; 2025 ETOMIC</p></footer>`
+  return `
+    <footer class="footer">
+      <div class="footer-content">
+        <p>&copy; ${new Date().getFullYear()} ETOMIC. All rights reserved</p>
+      
+      </div>
+    </footer>
+  `
 }

@@ -1,0 +1,28 @@
+.footer {
+  background-color: var(--primary-color);
+  color: var(--text-on-primary);
+  padding: 1rem 0;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.footer-content {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footer-nav a {
+  color: var(--text-on-primary);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: opacity 0.2s ease;
+}
+
+.footer-nav a:hover {
+  opacity: 0.7;
+}

@@ -1,5 +1,5 @@
 /* js/api.js */
-export const API_URL = 'http://localhost:3056/api/v1'
+export const API_URL = 'http://localhost:3059/api/v1'
 
 let authToken = localStorage.getItem('authToken')
 
@@ -12,12 +12,11 @@ export async function apiFetch(endpoint, options = {}) {
   // tener la url completa
   const url = endpoint.startsWith('http') ? endpoint : `${API_URL}${endpoint}`
 
-  const headers = {
-    ...options.headers
-  }
+  const headers = { ...options.headers }
 
-  // si no es FORMFdata , le añadire el content type a Json
-  if (!headers['Content-Type']) {
+  const isForm = options.body instanceof FormData
+  // Solo añadir JSON si NO es FormData
+  if (!isForm && !headers['Content-Type']) {
     headers['Content-Type'] = 'application/json'
   }
 

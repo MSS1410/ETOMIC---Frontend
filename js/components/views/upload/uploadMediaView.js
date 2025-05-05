@@ -59,16 +59,20 @@ export async function initUploadMediaView() {
 
   // Configurar envío
   const submitBtn = document.getElementById('upload-submit-btn')
-  submitBtn.addEventListener('click', async () => {
-    const errEl = document.getElementById('upload-error')
-    const okEl = document.getElementById('upload-success')
-    errEl.textContent = ''
-    okEl.textContent = ''
+  // Al asignar a onclick, te aseguras de NO acumular listeners
+  submitBtn.onclick = async () => {
+    const errsubida = document.getElementById('upload-error')
+    const oksubida = document.getElementById('upload-success')
+    errsubida.textContent = ''
+    oksubida.textContent = ''
 
     const eventId = document.getElementById('upload-event-select').value
     const file = document.getElementById('upload-file').files[0]
     const desc = document.getElementById('upload-description').value
-    if (!eventId || !file) return showToast('Please select event and file')
+    if (!eventId || !file) {
+      showToast('Please select event and file')
+      return
+    }
 
     const formData = new FormData()
     formData.append('event', eventId)
@@ -76,15 +80,20 @@ export async function initUploadMediaView() {
     formData.append('description', desc)
 
     try {
-      await apiFetch(`${API_URL}/event-media/:eventId`, {
+      await apiFetch(`${API_URL}/event-media/${eventId}`, {
         method: 'POST',
         body: formData,
         headers: {}
       })
-      okEl.textContent = 'Upload successful'
+
       showToast('Media uploaded')
+
+      // 🔄 RESET de campos
+      document.getElementById('upload-event-select').value = ''
+      document.getElementById('upload-file').value = ''
+      document.getElementById('upload-description').value = ''
     } catch (error) {
-      errEl.textContent = error.message
+      errsubida.textContent = error.message
     }
-  })
+  }
 }

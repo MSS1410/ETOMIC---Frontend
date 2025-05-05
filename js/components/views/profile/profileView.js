@@ -1,4 +1,5 @@
 // js/components/views/profile/profileView.js
+
 import { apiFetch, API_URL } from '../../../api.js'
 import { showToast } from '../../../toast.js'
 import { showView } from '../../../navigation.js'
@@ -52,7 +53,7 @@ export function renderProfileView() {
  *  - Gestiona formularios de datos y de imagen
  */
 export async function initProfileView() {
-  // Back
+  // Back Button
   document
     .getElementById('profile-back')
     .addEventListener('click', () => showView('main-menu-view', true))
@@ -61,11 +62,9 @@ export async function initProfileView() {
   let user
   try {
     user = await apiFetch(`${API_URL}/users/me`)
-    // Asignar imagen
     const imgEl = document.getElementById('profile-now-image')
     const profileUrl = user.profileImage || user.imageUrl || user.image
     if (profileUrl) imgEl.src = profileUrl
-    // preguntar si puedo mandar un mensaje por pantalla como no tiene imagen de perfil
     else imgEl.removeAttribute('src')
 
     document.getElementById('profile-now-name').textContent = user.name
@@ -76,58 +75,75 @@ export async function initProfileView() {
     console.error('Error loading profile:', err)
   }
 
-  // Formulario de datos
-  document
-    .getElementById('profile-data-form')
-    .addEventListener('submit', async (ev) => {
-      ev.preventDefault()
-      const name = document.getElementById('profile-name').value
-      const email = document.getElementById('profile-email').value
-      const password = document.getElementById('profile-password').value
-      const confirm = document.getElementById('profile-confirm-password').value
-      if (password && password !== confirm) {
-        showToast('Passwords do not match')
-        return
-      }
-      try {
-        // Usa el mismo user._id obtenido antes
-        await apiFetch(`${API_URL}/users/${user._id}`, {
-          method: 'PUT',
-          body: JSON.stringify({ name, email, password })
-        })
-        document.getElementById('profile-success').textContent =
-          'Profile updated'
-        showToast('Profile updated')
-      } catch (error) {
-        document.getElementById('profile-error').textContent = error.message
-        showToast(error.message)
-      }
-    })
+  // Formulario de datos de perfil
+  const dataForm = document.getElementById('profile-data-form')
+  const dataError = document.getElementById('profile-error')
+  const dataSuccess = document.getElementById('profile-success')
 
-  // Formulario de imagen
-  document
-    .getElementById('profile-image-form')
-    .addEventListener('submit', async (e) => {
-      e.preventDefault()
-      const file = document.getElementById('profile-image-input').files[0]
-      if (!file) {
-        showToast('Please select an image')
-        return
-      }
-      const formData = new FormData()
+  dataForm.onsubmit = async (ev) => {
+    ev.preventDefault()
+    dataError.textContent = ''
+    dataSuccess.textContent = ''
 
-      formData.append('img', file)
-      try {
-        await apiFetch(`${API_URL}/users/profile/profile-image`, {
-          method: 'PUT',
-          body: formData,
-          headers: {} // multipart
-        })
-        document.getElementById('profile-success').textContent = 'Image updated'
-        showToast('Profile image updated')
-      } catch (error) {
-        document.getElementById('profile-error').textContent = error.message
-        showToast(error.message)
-      }
-    })
+    const name = document.getElementById('profile-name').value.trim()
+    const email = document.getElementById('profile-email').value.trim()
+    const password = document.getElementById('profile-password').value
+    const confirm = document.getElementById('profile-confirm-password').value
+
+    if (password && password !== confirm) {
+      showToast('Passwords do not match')
+      return
+    }
+
+    try {
+      await apiFetch(`${API_URL}/users/${user._id}`, {
+        method: 'PUT',
+        body: JSON.stringify({ name, email, password }),
+        headers: {}
+      })
+      dataSuccess.textContent = 'Profile updated'
+      showToast('Profile updated')
+      dataForm.reset() // 🔄 reset del formulario de datos
+      // Repoblar inputs con nuevos valores
+      document.getElementById('profile-name').value = name
+      document.getElementById('profile-email').value = email
+    } catch (error) {
+      dataError.textContent = error.message
+      showToast(error.message)
+    }
+  }
+
+  // Formulario de imagen de perfil
+  const imgForm = document.getElementById('profile-image-form')
+  const imgError = document.getElementById('profile-error')
+  const imgSuccess = document.getElementById('profile-success')
+
+  imgForm.onsubmit = async (e) => {
+    e.preventDefault()
+    imgError.textContent = ''
+    imgSuccess.textContent = ''
+
+    const file = document.getElementById('profile-image-input').files[0]
+    if (!file) {
+      showToast('Please select an image')
+      return
+    }
+
+    const formData = new FormData()
+    formData.append('img', file)
+
+    try {
+      await apiFetch(`${API_URL}/users/profile/profile-image`, {
+        method: 'PUT',
+        body: formData,
+        headers: {} // multipart
+      })
+      imgSuccess.textContent = 'Image updated'
+      showToast('Profile image updated')
+      imgForm.reset() // 🔄 reset del formulario de imagen
+    } catch (error) {
+      imgError.textContent = error.message
+      showToast(error.message)
+    }
+  }
 }
